@@ -1,0 +1,87 @@
+<nav class="navbar navbar-light" style="background-color: #ff9430;">
+  <a class="navbar-brand" href="/" style="color: #fff; font-family: 'PT Sans', sans-serif;">Nintendo eShop Searcher</a>
+  <form class="form-inline" action="/search" method="POST">
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+      </div>
+      <input class="form-control mr-sm-2" name="item" id="item" type="type" placeholder="Pesquisar"
+        aria-label="Pesquisar">
+  </form>
+  <div class="collapse navbar-collapse flex-column " id="navbar"></div>
+</nav>
+<nav class="navbar navbar-light" style="background-color: #d97a21;">
+  <ul>
+    <li>
+      <a class="nav-link" href="/sale">Promoções</a>
+    </li>
+    <li>
+      <a class="nav-link" href="/low">Mais baratos</a>
+    </li>
+    <li>
+      <a class="nav-link" href="/high">Mais Caros</a>
+    </li>
+    <li>
+      <a class="nav-link" href="/free">Gratuitos</a>
+    </li>
+  </ul>
+</nav>
+{{#if games}}
+<div class="card-deck" id="myTable">
+  {{#each games}}
+    <div class="card" id="card" style="width: 18rem; margin-bottom: 20px;">
+      <a class="item-details" href="details/{{nsuid}}">
+      {{#if horizontalHeaderImage}}
+      <img class="card-img-top" src="{{horizontalHeaderImage}}" alt="Card image cap" width="200px;">
+      {{else}}
+      {{#if boxart}}
+      <img class="card-img-top" src="{{boxart}}" alt="Card image cap" width="200px; onerror="
+        this.src='/./img/not_found.png'"">
+      {{else}}
+      <img class="card-img-top" src="/./img/not_found.png" alt="Card image cap" width="200px;">
+      {{/if}}
+      {{/if}}
+      </a>
+      <div class="card-body">
+        <a class="item-details" href="details/{{nsuid}}">
+        <h5 class="card-title">{{title}}</h5>
+        </a>
+        {{#if salePrice}}
+        <p class="card-text"><b>R${{salePrice}}</b> <s>R${{msrp}}</s></p>
+        {{else}}
+        <p class="card-text"><b>
+            {{#if msrp}}R${{msrp}}
+            {{else}}
+            {{#if (isZero msrp) }}
+            Gratuito
+            {{else}}
+            Sem preço registrado
+            {{/if}}
+            {{/if}}</b></p>
+        {{/if}}
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">{{platform}}</small>
+      </div>
+    </div>
+  </a>
+  {{/each}}
+</div>
+{{else}}
+<h2>No results found.</h2>
+{{/if}}
+
+<script>
+  $(document).ready(function () {
+    $("#item").on("keyup", function () {
+      var value = $(this).val().toLowerCase();
+
+      //console.log(value)
+      $("#myTable a h5").filter(function () {
+
+        $(this).parents("#card").toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+
+  });
+</script>

@@ -1,0 +1,17 @@
+{{#each games}}
+
+<div class="media">{{#if boxart}}
+  <p>
+    <img class="align-self-end mr-3" src="{{horizontalHeaderImage}}" alt="{{title}}" width="200px">
+    {{else}}
+    <img class="align-self-end mr-3" src="/./img/not_found.png" alt="{{title}}">
+    {{/if}}
+  </p>
+  <div class="media-body">
+    <h5 class="mt-0">{{title}}</h5>
+    <p>{{description}}</p>
+    <p class="mb-0">{{publishers}}</p>
+  </div>
+</div>
+
+{{/each}}
